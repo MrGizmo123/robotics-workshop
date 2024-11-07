@@ -5,19 +5,19 @@ Needs Arduino IDE or ~arduino-cli~ with the esp32 boards by esspressif(not Ardui
 
 ** arduino-cli
 
-For ~arduino-cli~ run 
+For ~arduino-cli~ run the following to install the ESP32 boards
 #+begin_src bash
 arduino-cli core install esp32:esp32
 #+end_src
-To install the ESP32 boards
 
-To compile and upload use
+To compile and upload use the following, make sure to change the
+makefile to the correct port (/dev/ttyUSB<whatever>)
 #+begin_src bash
 make compile
 
 make upload
 #+end_src
-Change the makefile to the correct port (/dev/ttyUSB<whatever>)
+
 
 ** Arduino IDE
 
