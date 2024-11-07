@@ -1,0 +1,29 @@
+#+title: PICT Robotics FE Workshop 2024
+
+* Requirements
+Needs Arduino IDE or ~arduino-cli~ with the esp32 boards by esspressif(not Arduino) installed.
+
+** arduino-cli
+
+For ~arduino-cli~ run 
+#+begin_src bash
+arduino-cli core install esp32:esp32
+#+end_src
+To install the ESP32 boards
+
+To compile and upload use
+#+begin_src bash
+make compile
+
+make upload
+#+end_src
+Change the makefile to the correct port (/dev/ttyUSB<whatever>)
+
+** Arduino IDE
+
+1. Install the ESP32 boards by Espressif
+2. Set the board to ~DOIT ESP32 DEVKIT V1~
+3. Compile and upload
+
+   
+
