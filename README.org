@@ -10,18 +10,17 @@ Needs Arduino IDE or ~arduino-cli~ with the esp32 boards by esspressif(not Ardui
 3. Set the board to ~DOIT ESP32 DEVKIT V1~
 4. Compile and upload
 
-   
-
 ** arduino-cli
 
-For ~arduino-cli~ run the following to install the ESP32 boards and Dabble library
++ For ~arduino-cli~ run the following to install the ESP32 boards and Dabble library
 #+begin_src bash
 $ arduino-cli core install esp32:esp32@2.0.0
 
 $ arduino-cli lib install DabbleESP32@1.5.1
 #+end_src
 
-To compile and upload use the following, make sure to change the
++ To compile and upload use the following
++ make sure to change the
 makefile to the correct port (/dev/ttyUSB<whatever>)
 #+begin_src bash
 $ make compile
