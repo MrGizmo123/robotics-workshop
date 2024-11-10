@@ -20,8 +20,7 @@ $ arduino-cli lib install DabbleESP32@1.5.1
 #+end_src
 
 + To compile and upload use the following
-+ make sure to change the
-makefile to the correct port (/dev/ttyUSB<whatever>)
++ make sure to change the makefile to the correct port (/dev/ttyUSB<whatever>)
 #+begin_src bash
 $ make compile
 
