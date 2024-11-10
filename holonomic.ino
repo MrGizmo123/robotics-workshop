@@ -6,30 +6,23 @@
  * This code incorporates the networking, motor driving, sensor code
  * for the Holonomic Bot build.
  *
- * Contributors: Hrushikesh, Kaushal, Tanaya
+ * Contributors: Hrushikesh, Kaushal, Nimish, Tanaya
  *
  */
 
+/* Required for Dabble */
+#define CUSTOM_SETTINGS
+#define INCLUDE_GAMEPAD_MODULE
+
+#include <DabbleESP32.h>
 #include <Arduino.h>
-#include <WiFi.h>
-#include <AsyncUDP.h>
 
 /* custom headers (also .ino files motor.ino, network.ino) */
 #include "definitions.h"				/* constants */
 #include "motor.h"							/* motor functions */
-#include "network.h"						/* networking functions */
 
 /* "Out" state */
 volatile bool isOut = false;
-AsyncUDP udp;
-
-/* needs IRAM_ATTR for proper functioning */
-IRAM_ATTR void udp_callback(AsyncUDPPacket &packet) {
-	if (!isOut)
-	{
-		
-	}
-}
 
 void setup() {
 	Serial.begin(115200);
@@ -42,15 +35,8 @@ void setup() {
 	pinMode(LED_PIN, OUTPUT);
 	digitalWrite(LED_PIN, LOW);
 
-	
-	/* connect to wifi and setup callback */
-	if (connect_wifi(udp, SSID, PASS))
-	{
-		if (start_server(udp, PORT))
-		{
-			udp_on_packet(udp, udp_callback, true);
-		}
-	}
+	/* initialize dabble and set Bluetooth Name */
+	Dabble.begin("Holonomic Hunter"); 
 
 }
 
@@ -60,6 +46,33 @@ void loop() {
 		isOut = true;								/* bot is out */
 		digitalWrite(LED_PIN, HIGH); /* led should glow */
 	}
+
+	/* This function handles the communication between phone and
+	 * esp32 */
+	Dabble.processInput();
+
+	/* Only move the bot if it is not out */
+	if (!isOut)
+	{
+		/* dabble controls have max value of 7, we need to convert it to
+		 * max of 255. So we apply this scaling factor */
+		
+		float scaling  = 255.0 / 7.0; 
+		int velx = scaling * GamePad.getXaxisData();
+		int vely = scaling * GamePad.getYaxisData();
+		
+		move_in_direction(velx, vely);
+	}
+
+
+	/* this condition is only for debugging purpose 
+	 * TODO: remove in final version */
+	if (Dabble.isStartPressed())
+	{
+		isOut = false;							/* bot is again in the game */
+		digitalWrite(LED_PIN, LOW);	/* turn led off */
+	}
+	
 }
 
 
