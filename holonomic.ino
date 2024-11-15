@@ -38,18 +38,31 @@ void setup() {
 	/* initialize dabble and set Bluetooth Name */
 	Dabble.begin("Holonomic Hunter"); 
 
+  
+  // setMotor(M0_IN1, M0_IN2, M0_PWM, 255);
+  // setMotor(M1_IN1, M1_IN2, M1_PWM, 255);
+  // setMotor(M2_IN1, M2_IN2, M2_PWM, 255);
+  // setMotor(M3_IN1, M3_IN2, M3_PWM, 255);
 }
 
 void loop() {
 	if (digitalRead(HALL_SENSOR_PIN))
 	{
-		isOut = true;								/* bot is out */
+		//isOut = true;								/* bot is out */
 		digitalWrite(LED_PIN, HIGH); /* led should glow */
 	}
 
 	/* This function handles the communication between phone and
 	 * esp32 */
 	Dabble.processInput();
+
+  //move_in_direction_serial(255,0);
+
+  // analogWrite(M0_PWM, 255);
+  // analogWrite(M1_PWM, 255);
+  // analogWrite(M2_PWM, 255);
+  // analogWrite(M3_PWM, 255);
+
 
 	/* Only move the bot if it is not out */
 	if (!isOut)
@@ -60,19 +73,22 @@ void loop() {
 		float scaling  = 255.0 / 7.0; 
 		int velx = scaling * GamePad.getXaxisData();
 		int vely = scaling * GamePad.getYaxisData();
+
+    Serial.print("velx: ");
+    Serial.print(velx);
+    Serial.print(", vely: ");
+    Serial.println(vely);
 		
-		move_in_direction(velx, vely);
+		move_in_direction_serial(velx, vely);
 	}
 
 
 	/* this condition is only for debugging purpose 
 	 * TODO: remove in final version */
-	if (Dabble.isStartPressed())
+	if (GamePad.isStartPressed())
 	{
 		isOut = false;							/* bot is again in the game */
 		digitalWrite(LED_PIN, LOW);	/* turn led off */
 	}
 	
 }
-
-
