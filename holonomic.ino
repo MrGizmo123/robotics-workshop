@@ -24,57 +24,21 @@
 volatile bool isOut = false;
 
 void setup() {
-	Serial.begin(115200);
+  /* Serial begin */
 
 	/* Initialize motor direction pins */
-	setup_motors();
 
-	/* Initialize Hall sensor and LED pins */
-	pinMode(HALL_SENSOR_PIN, INPUT);
-	pinMode(LED_PIN, OUTPUT);
-	digitalWrite(LED_PIN, LOW);
+	/* Initialize Hall sensor pins */
 	
 	/* initialize dabble and set Bluetooth Name */
-	Dabble.begin("Holonomic Hunter"); 
 }
 
 void loop() {
 	
-	if (!isOut && digitalRead(HALL_SENSOR_PIN))
-	{
-	  isOut = true;								/* bot is out */
-	  digitalWrite(LED_PIN, HIGH); /* led should glow */
-    Serial.println("OUT");
-
-    move_in_direction(0,0);
-	}
-
-	/* This function handles the communication between phone and
-	 * esp32 */
-	Dabble.processInput();
+  /* Add check for Hall Sensor Input */
 
 	/* Only move the bot if it is not out */
-	if (!isOut)
-	{
-		float scaling  = 255.0 / 7.0; 
-		int velx = -scaling * GamePad.getXaxisData();
-		int vely = scaling * GamePad.getYaxisData();
 
-    Serial.print("velx: ");
-    Serial.print(velx);
-    Serial.print(", vely: ");
-    Serial.println(vely);
-		
-		move_in_direction(velx, vely);
-	}
-
-	/* this condition is only for debugging purpose 
-	 * TODO: remove in final version */
-	if (GamePad.isStartPressed())
-	{
-		isOut = false;							/* bot is again in the game */
-		digitalWrite(LED_PIN, LOW);	/* turn led off */
-    Serial.println("NOT OUT");
-	}
+	/* reset the bot */
 	
 }
