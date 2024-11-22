@@ -17,8 +17,8 @@
 #include <Arduino.h>
 
 /* custom headers (also .ino files motor.ino, network.ino) */
-#include "definitions.h"				/* constants */
-#include "motor.h"							/* motor functions */
+#include "definitions.h"        /* constants */
+#include "motor.h"              /* motor functions */
 
 /* "Out" state */
 volatile bool isOut = false;
@@ -26,19 +26,19 @@ volatile bool isOut = false;
 void setup() {
   /* Serial begin */
 
-	/* Initialize motor direction pins */
+  /* Initialize motor direction pins */
 
-	/* Initialize Hall sensor pins */
-	
-	/* initialize dabble and set Bluetooth Name */
+  /* Initialize Hall sensor pins */
+  
+  /* initialize dabble and set Bluetooth Name */
 }
 
 void loop() {
-	
+  
   /* Add check for Hall Sensor Input */
 
-	/* Only move the bot if it is not out */
+  /* Only move the bot if it is not out */
 
-	/* reset the bot */
-	
+  /* reset the bot */
+  
 }
